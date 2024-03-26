@@ -1,7 +1,10 @@
 import { Inter } from "next/font/google";
+
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const db = process.env.DB_HOST;
+console.log("ttää2 " + db);
 
 export const metadata = {
   title: "Create Next App",
