@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 export default function Home() {
+  const test = "test";
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-500 via-purple-500 to-black">
       <Head>
