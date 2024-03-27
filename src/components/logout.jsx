@@ -9,7 +9,11 @@ export const Logout = () => {
   const logOut = async () => {
     if (auth.currentUser) {
       await auth.signOut();
-      await router.push(`/`);
+      await router.push(`/`, undefined, { shallow: true });
+      /* router.push(`/`, undefined, { shallow: true });
+
+      // Force a full reload of the page*/
+      window.location.reload(true);
     }
   };
 

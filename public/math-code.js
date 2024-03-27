@@ -1,3 +1,5 @@
+// tässä pitää hoitaa tilanne jos ans on jo olemassa
+// tai pistetään logout lataamaan uudelleen!
 const answer = document.querySelector("#answer1");
 
 console.log(answer);
