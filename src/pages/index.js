@@ -1,3 +1,4 @@
+import Editor from "@/components/editor";
 import Head from "next/head";
 
 export default function Home() {
