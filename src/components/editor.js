@@ -3,18 +3,14 @@ import { useEffect } from "react";
 
 export default function Editor() {
   useEffect(() => {
-    const initializeMathJax = () => {
-      // Render MathJax
-      window.MathJax.typeset();
-    };
-
     // Create script elements
     const mathjaxConfigScript = document.createElement("script");
     mathjaxConfigScript.src = "/mathjax-config.js";
+    mathjaxConfigScript.async = true;
 
-    const mathjaxScript = document.createElement("script");
+    /* const mathjaxScript = document.createElement("script");
     mathjaxScript.src = "//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js";
-    mathjaxScript.id = "MathJax-script";
+    mathjaxScript.id = "MathJax-script"; */
 
     const mathCodeScript = document.createElement("script");
     mathCodeScript.src = "/math-code.js";
@@ -22,15 +18,13 @@ export default function Editor() {
 
     // Append script elements to the document body
     document.body.appendChild(mathjaxConfigScript);
-    document.body.appendChild(mathjaxScript);
+    //document.body.appendChild(mathjaxScript);
     document.body.appendChild(mathCodeScript);
-
-    mathjaxScript.onload = initializeMathJax;
 
     // Clean up function to remove the script elements when component unmounts
     return () => {
       document.body.removeChild(mathjaxConfigScript);
-      document.body.removeChild(mathjaxScript);
+      //document.body.removeChild(mathjaxScript);
       document.body.removeChild(mathCodeScript);
     };
   }, []);
