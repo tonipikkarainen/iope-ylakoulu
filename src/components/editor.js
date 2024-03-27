@@ -1,6 +1,31 @@
 import Head from "next/head";
+import { useEffect } from "react";
 
 export default function Editor() {
+  useEffect(() => {
+    // Create script elements
+    const mathjaxConfigScript = document.createElement("script");
+    mathjaxConfigScript.src = "/mathjax-config.js";
+
+    const mathjaxScript = document.createElement("script");
+    mathjaxScript.src = "//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js";
+    mathjaxScript.id = "MathJax-script";
+
+    const mathCodeScript = document.createElement("script");
+    mathCodeScript.src = "/math-code.js";
+
+    // Append script elements to the document body
+    document.body.appendChild(mathjaxConfigScript);
+    document.body.appendChild(mathjaxScript);
+    document.body.appendChild(mathCodeScript);
+
+    // Clean up function to remove the script elements when component unmounts
+    return () => {
+      document.body.removeChild(mathjaxConfigScript);
+      document.body.removeChild(mathjaxScript);
+      document.body.removeChild(mathCodeScript);
+    };
+  }, []);
   return (
     <>
       <Head>
@@ -16,7 +41,6 @@ export default function Editor() {
 
       <div>
         <section>
-          <h1>ChatGPT -tarkistaja </h1>
           <h2>Demo-versio</h2>
           <div
             className="answer rich-text-editor"
@@ -25,12 +49,6 @@ export default function Editor() {
           ></div>
         </section>
       </div>
-      <script src="/mathjax-config.js"></script>
-      <script
-        src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
-        id="MathJax-script"
-      ></script>
-      <script src="/math-code.js"></script>
     </>
   );
 }

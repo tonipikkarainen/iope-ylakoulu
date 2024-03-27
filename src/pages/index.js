@@ -26,6 +26,7 @@ export default function Home() {
         <button className="bg-pink-500 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline hover:bg-pink-600 hover:text-gray-100">
           Kirjaudu
         </button>
+        <Editor />
       </div>
     </div>
   );
