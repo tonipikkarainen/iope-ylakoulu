@@ -19,7 +19,6 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <script src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" />
       </body>
     </Html>
   );
