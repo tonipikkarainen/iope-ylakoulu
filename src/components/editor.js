@@ -33,12 +33,6 @@ export default function Editor() {
       <Head>
         <title>My page title</title>
         <meta property="og:title" content="My page title" key="title" />
-        <script
-          src="//code.jquery.com/jquery-3.4.1.min.js"
-          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-          crossOrigin="anonymous"
-        ></script>
-        <script src="//unpkg.com/rich-text-editor/dist/rich-text-editor-bundle.js"></script>
       </Head>
 
       <div>
