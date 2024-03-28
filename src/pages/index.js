@@ -3,9 +3,11 @@ import Head from "next/head";
 import { useAuth } from "../tools/auth";
 import { Logout } from "@/components/logout";
 import { Loading } from "@/components/loading";
+import OpenAI from "openai";
 
 export default function Home() {
   const { isAuthenticated, loading, user } = useAuth();
+  //const openai = process.env.OPEN_AI_API_KEY;
 
   if (loading) {
     // Render loading indicator or other content while authentication is being checked
