@@ -121,19 +121,20 @@ export default function Editor() {
       </Head>
 
       <div>
+        <div>{"Tehtävä: "}</div>
+        <MathText text={kysymys} />
         <section>
-          <h2>Demo-versio</h2>
+          <h2>Vastauksesi</h2>
           <div
             className="answer rich-text-editor"
             id="answer1"
             placeholder="Kirjoita kaava...ei toimi"
           ></div>
         </section>
-        <div>{"Tehtävä: "}</div>
-        <MathText text={kysymys} />
-        <Button onClick={handleSubmit} text="Lähetä ChatGPT:lle" />
-        <div>{"Viesti ChatGPT:lle: " + msg}</div>
-        <div>{"Vastaus / palaute:"}</div>
+
+        <Button onClick={handleSubmit} text="Lähetä tekoälylle" />
+        <div>{"Viesti tekoälylle:lle: " + msg}</div>
+        <div>{"Palaute:"}</div>
         {loading && <Spinner />}
         <MathText text={apiResponse} />
       </div>

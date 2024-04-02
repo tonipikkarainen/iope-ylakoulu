@@ -6,6 +6,7 @@ h1 {
 .answer {
   border: 1px solid #aaa;
   padding: 5px;
+  margin-bottom: 10px;
   box-sizing: content-box;
   min-height: 100px;
   font: 17px "Times New Roman";
