@@ -4,6 +4,7 @@ import { useAuth } from "../tools/auth";
 import { Logout } from "@/components/logout";
 import { Loading } from "@/components/loading";
 import OpenAI from "openai";
+import Navbar from "@/components/navbar";
 
 export default function Home() {
   const { isAuthenticated, loading, user } = useAuth();
@@ -19,7 +20,7 @@ export default function Home() {
     return null; // or loading indicator, login form, etc.
   }
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-500 via-purple-500 to-black">
+    <div className="min-h-screen flex">
       <Head>
         <title>LaskijanAI</title>
         <link rel="icon" href="/favicon.ico" />
@@ -32,14 +33,18 @@ export default function Home() {
         }
       `}</style>
 
-      <div className="max-w-md w-full p-8 bg-white shadow-lg rounded-lg text-center">
-        <h1 className="text-6xl font-bold text-gray-800 mb-4">LaskijanAI</h1>
-        <p className="text-lg text-gray-700 mb-6">
-          Matikkaeditori | Tehtäviä | Tekoäly-tarkistaja
-        </p>
-
-        <Editor />
-        {user && <Logout />}
+      <Navbar />
+      <div className="bg-gradient-to-br from-pink-500 via-purple-500 to-black w-full flex justify-center p-4">
+        <div className="max-w-md w-full p-8 bg-white shadow-lg rounded-lg text-center">
+          <h1 className="text-6xl font-bold text-gray-800 mb-4">LaskijanAI</h1>
+          <p className="text-lg text-gray-700 mb-6">
+            Matikkaeditori | Tehtäviä | Tekoäly-tarkistaja
+          </p>
+          <div className="text-left">
+            <Editor />
+          </div>
+          {user && <Logout />}
+        </div>
       </div>
     </div>
   );
