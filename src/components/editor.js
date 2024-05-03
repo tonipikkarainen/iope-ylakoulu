@@ -4,21 +4,20 @@ import { Button } from "./button";
 import Spinner from "./spinner";
 import MathText from "./MathText";
 
-export default function Editor() {
+export default function Editor({ data }) {
   const [msg, setMsg] = useState("");
   const [apiResponse, setApiResponse] = useState("");
   const [loading, setLoading] = useState(false);
-  const kysymys = "Mitkä ovat funktion $f\\left(x\\right)=x^2-4$ nollakohdat?";
+  const kysymys = data
+    ? data.kysymys
+    : "Mitkä ovat funktion $f\\left(x\\right)=x^2-4$ nollakohdat?";
 
   useEffect(() => {
     // Create script elements
+
     const mathjaxConfigScript = document.createElement("script");
     mathjaxConfigScript.src = "/mathjax-config.js";
     mathjaxConfigScript.async = true;
-
-    /* const mathjaxScript = document.createElement("script");
-    mathjaxScript.src = "//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js";
-    mathjaxScript.id = "MathJax-script"; */
 
     const mathCodeScript = document.createElement("script");
     mathCodeScript.src = "/math-code.js";
@@ -105,6 +104,7 @@ export default function Editor() {
           new Error(`Request failed with status ${response.status}`)
         );
       }
+      // Tässä tallennus tietokantaan data ja message ja kysymys ja käyttäjä!
       setApiResponse(data.result);
     } catch (e) {
       console.log(e);

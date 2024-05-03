@@ -1,13 +1,16 @@
 import React from "react";
-import { useState } from "react";
-import { FaHome, FaCog, FaUser } from "react-icons/fa"; // Import icons from react-icons library
-import { FiAlignJustify } from "react-icons/fi";
+import { useState, useEffect } from "react";
 import { BiBoltCircle } from "react-icons/bi";
+import { db } from "../../firebaseconfig";
+import Link from "next/link";
+
+import { collection, query, getDocs } from "firebase/firestore";
 
 const Navbar = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [data, setData] = useState([]);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = async () => {
     setIsHovered(true);
   };
 
@@ -15,61 +18,55 @@ const Navbar = () => {
     setIsHovered(false);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, "kysymykset"));
+
+      try {
+        const querySnapshot = await getDocs(q);
+        const newData = [];
+        querySnapshot.forEach((doc) => {
+          newData.push({ id: doc.id, ...doc.data() });
+        });
+        setData(newData);
+        console.log("kys:");
+        console.log(newData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div
-      className={`bg-gradient-to-b from-purple-700 via-purple-500 to-purple-300 text-white p-4 transition-all duration-300 ${
-        isHovered ? "w-1/5" : "w-16"
-      }`}
+      className="fixed h-full bg-purple-700 text-white p-4 transition-all duration-300 w-56"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isHovered ? (
-        <>
-          <h1 className="text-3xl font-bold mb-4">LaskijanAI</h1>
-        </>
-      ) : (
-        <div className="mb-4">
-          <FiAlignJustify className="inline-block" />
-        </div>
-      )}
+      <div className="mb-4">
+        <h1 className="text-3xl font-bold mb-4">LaskijanAI</h1>
+      </div>
 
       <ul>
         <li className=" whitespace-nowrap">
-          {isHovered && (
-            <>
-              <FaHome className="mr-2 inline-block" />
-              <a
-                href="#"
-                className="inline-block py-2 hover:underline whitespace-nowrap"
-              >
-                Home
-              </a>
-            </>
-          )}
+          <a
+            href="/"
+            className="inline-block py-2 hover:underline whitespace-nowrap"
+          >
+            Home
+          </a>
         </li>
-        <li className=" whitespace-nowrap">
-          {isHovered && (
-            <>
-              <BiBoltCircle className="mr-2 inline-block" />
-              <a
-                href="#"
-                className="inline-block py-2 hover:underline whitespace-nowrap"
-              >
-                Tehtävä 1
-              </a>
-            </>
-          )}
-        </li>
-        <li className=" whitespace-nowrap">
-          {isHovered && (
-            <>
-              <BiBoltCircle className="mr-2 inline-block" />
-              <a href="#" className="inline-block py-2 hover:underline">
-                Tehtävä 2
-              </a>
-            </>
-          )}
-        </li>
+        {data.map((item) => (
+          <li key={item.id} className=" whitespace-nowrap">
+            <BiBoltCircle className="mr-2 inline-block" />
+            <Link href="/[id]" as={`/${item.id}`}>
+              <div className="inline-block py-2 hover:underline whitespace-nowrap">
+                {item.otsikko}
+              </div>
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
