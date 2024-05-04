@@ -24,9 +24,9 @@ export default function Home() {
         try {
           const doc = await getDoc(docRef);
           if (doc.exists) {
-            setData(doc.data());
+            setData({ ...doc.data(), id: id });
             console.log("tääl");
-            console.log("täs" + doc.data().kysymys);
+            console.log("tässssss" + doc.data());
           } else {
             console.log("No such document!");
           }

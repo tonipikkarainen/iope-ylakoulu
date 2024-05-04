@@ -3,11 +3,19 @@ import { useEffect, useState } from "react";
 import { Button } from "./button";
 import Spinner from "./spinner";
 import MathText from "./MathText";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebaseconfig";
+import { useAuth } from "../tools/auth";
 
 export default function Editor({ data }) {
+  const { isAuthenticated, user } = useAuth();
+
   const [msg, setMsg] = useState("");
   const [apiResponse, setApiResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const id = data
+    ? data.id
+    : "Mitkä ovat funktion $f\\left(x\\right)=x^2-4$ nollakohdat?";
   const kysymys = data
     ? data.kysymys
     : "Mitkä ovat funktion $f\\left(x\\right)=x^2-4$ nollakohdat?";
@@ -97,15 +105,29 @@ export default function Editor({ data }) {
           msg: message,
         }),
       });
-      const data = await response.json();
+      const data1 = await response.json();
       if (response.status !== 200) {
         throw (
-          data.error ||
+          data1.error ||
           new Error(`Request failed with status ${response.status}`)
         );
       }
       // Tässä tallennus tietokantaan data ja message ja kysymys ja käyttäjä!
-      setApiResponse(data.result);
+      // Add a new document with a generated id.
+
+      setApiResponse(data1.result);
+
+      console.log(data);
+      console.log(user.uid);
+      const docRef = await addDoc(collection(db, "ratkaisut"), {
+        kysymysID: id,
+        kysymys: kysymys,
+        viesti: message,
+        palaute: data1.result,
+        user: user.uid,
+      });
+
+      console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.log(e);
       setApiResponse("Something is going wrong, Please try again.");

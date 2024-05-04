@@ -50,12 +50,7 @@ const Navbar = () => {
 
       <ul>
         <li className=" whitespace-nowrap">
-          <a
-            href="/"
-            className="inline-block py-2 hover:underline whitespace-nowrap"
-          >
-            Home
-          </a>
+          <Link href="/">Home</Link>
         </li>
         {data.map((item) => (
           <li key={item.id} className=" whitespace-nowrap">
