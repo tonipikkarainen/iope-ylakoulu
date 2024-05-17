@@ -48,9 +48,9 @@ export default function Home() {
     // If not authenticated, the user will be redirected to the home page
     return null; // or loading indicator, login form, etc.
   }*/
-  /*if (false){
-    return null;
-  }*/
+  if (true) {
+    return <div>Sivu ei saatavilla juuri nyt </div>;
+  }
 
   return (
     <div className="min-h-screen flex">

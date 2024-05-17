@@ -19,9 +19,9 @@ export default function Home() {
     return null; // or loading indicator, login form, etc.
   }*/
   // Kun halutaan sulkea, tähän voidaan kirjoittaa
-  /*if (false){
-    return null;
-  }*/
+  if (true) {
+    return <div>Sivu ei saatavilla juuri nyt </div>;
+  }
 
   return (
     <div className="min-h-screen flex">
