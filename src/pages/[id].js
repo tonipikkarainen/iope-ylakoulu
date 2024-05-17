@@ -10,7 +10,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebaseconfig";
 
 export default function Home() {
-  const { isAuthenticated, loading, user } = useAuth();
+  //const { isAuthenticated, loading, user } = useAuth();
   //const openai = process.env.OPEN_AI_API_KEY;
   const router = useRouter();
   const { id } = router.query;
@@ -44,10 +44,10 @@ export default function Home() {
     return <Loading />;
   }
 
-  if (!isAuthenticated) {
+  /*if (!isAuthenticated) {
     // If not authenticated, the user will be redirected to the home page
     return null; // or loading indicator, login form, etc.
-  }
+  }*/
 
   return (
     <div className="min-h-screen flex">
@@ -74,7 +74,6 @@ export default function Home() {
           <div className="text-left">
             <Editor data={data} />
           </div>
-          {user && <Logout />}
         </div>
       </div>
     </div>

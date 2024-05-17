@@ -41,7 +41,7 @@ export default async function POST(request, response) {
         { role: "user", content: "Tässä kysymys: " + kysymys },
         { role: "user", content: "Ratkaisu: " + msg },
       ],
-      model: "gpt-3.5-turbo-0125",
+      model: "gpt-4o", //"gpt-3.5-turbo-0125",
     });
     console.log("completion" + completion.choices[0]);
 

@@ -8,7 +8,7 @@ import { db } from "../../firebaseconfig";
 import { useAuth } from "../tools/auth";
 
 export default function Editor({ data }) {
-  const { isAuthenticated, user } = useAuth();
+  //const { isAuthenticated, user } = useAuth();
 
   const [msg, setMsg] = useState("");
   const [apiResponse, setApiResponse] = useState("");
@@ -118,13 +118,11 @@ export default function Editor({ data }) {
       setApiResponse(data1.result);
 
       console.log(data);
-      console.log(user.uid);
       const docRef = await addDoc(collection(db, "ratkaisut"), {
         kysymysID: id,
         kysymys: kysymys,
         viesti: message,
         palaute: data1.result,
-        user: user.uid,
       });
 
       console.log("Document written with ID: ", docRef.id);
