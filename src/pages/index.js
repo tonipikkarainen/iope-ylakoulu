@@ -9,15 +9,20 @@ export default function Home() {
   //const { isAuthenticated, loading, user } = useAuth();
   //const openai = process.env.OPEN_AI_API_KEY;
 
-  if (loading) {
+  /*if (loading) {
     // Render loading indicator or other content while authentication is being checked
     return <Loading />;
-  }
+  }*/
 
   /*if (!isAuthenticated) {
     // If not authenticated, the user will be redirected to the home page
     return null; // or loading indicator, login form, etc.
   }*/
+  // Kun halutaan sulkea, tähän voidaan kirjoittaa
+  /*if (false){
+    return null;
+  }*/
+
   return (
     <div className="min-h-screen flex">
       <Head>
