@@ -10,6 +10,12 @@ import { useAuth } from "../tools/auth";
 export default function Editor({ data }) {
   //const { isAuthenticated, user } = useAuth();
 
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
   const [msg, setMsg] = useState("");
   const [apiResponse, setApiResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -93,7 +99,9 @@ export default function Editor({ data }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const message = handleClick();
+    //const message = handleClick();
+    setApiResponse("");
+    //setMsg(result);
     try {
       const response = await fetch("/api/openai", {
         method: "POST",
@@ -102,7 +110,7 @@ export default function Editor({ data }) {
         },
         body: JSON.stringify({
           kysymys: kysymys,
-          msg: message,
+          msg: selectedOption,
         }),
       });
       const data1 = await response.json();
@@ -118,14 +126,14 @@ export default function Editor({ data }) {
       setApiResponse(data1.result);
 
       console.log(data);
-      const docRef = await addDoc(collection(db, "ratkaisut"), {
+      /*const docRef = await addDoc(collection(db, "ratkaisut"), {
         kysymysID: id,
         kysymys: kysymys,
         viesti: message,
         palaute: data1.result,
-      });
+      });*/
 
-      console.log("Document written with ID: ", docRef.id);
+      //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.log(e);
       setApiResponse("Something is going wrong, Please try again.");
@@ -143,16 +151,43 @@ export default function Editor({ data }) {
       <div>
         <div>{"Tehtävä: "}</div>
         <MathText text={kysymys} />
-        <section>
-          <h2>Vastauksesi</h2>
-          <div
-            className="answer rich-text-editor"
-            id="answer1"
-            placeholder="Kirjoita kaava...ei toimi"
-          ></div>
-        </section>
+        <form className="text-black" onSubmit={handleSubmit}>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="jalkapallo"
+                checked={selectedOption === "jalkapallo"}
+                onChange={handleOptionChange}
+              />
+              Jalkapallo
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="jääkiekko"
+                checked={selectedOption === "jääkiekko"}
+                onChange={handleOptionChange}
+              />
+              Jääkiekko
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="uinti"
+                checked={selectedOption === "uinti"}
+                onChange={handleOptionChange}
+              />
+              Uinti
+            </label>
+          </div>
+        </form>
 
-        <Button onClick={handleSubmit} text="Lähetä tekoälylle" />
+        <Button type="submit" onClick={handleSubmit} text="Lähetä tekoälylle" />
         <div>{"Viesti tekoälylle:lle: " + msg}</div>
         <div>{"Palaute:"}</div>
         {loading && <Spinner />}

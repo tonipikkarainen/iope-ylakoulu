@@ -32,18 +32,17 @@ export default async function POST(request, response) {
         {
           role: "system",
           content:
-            "Olet matematiikan asiantuntija.  \
-            Saat ensin kysymyksen sitten oppilaan ratkaisun. Tarkista \
-            ratkaisu ja anna palautetta. Älä kerro oikeaa vastausta,jos\
-            ratkaisu on väärin. Anna matemaattinen teksti \
+            "Saat ensin tehtävän sitten oppilaan toivoman aihepiirin. \
+            Luo ja palauta tehtävästä uusi versio, joka liittyy oppilaan toivomaan aihepiiriin.\
+            Anna matemaattinen teksti \
             yhden ($) tai kahden($$) $-merkin sisällä.",
         },
         { role: "user", content: "Tässä kysymys: " + kysymys },
-        { role: "user", content: "Ratkaisu: " + msg },
+        { role: "user", content: "Tässä aihe: " + msg },
       ],
       model: "gpt-4o", //"gpt-3.5-turbo-0125",
     });
-    console.log("completion" + completion.choices[0]);
+    console.log("completion täälllä" + completion.choices[0].message.content);
 
     // Return the transcribed text in the response
     return response.status(200).json({

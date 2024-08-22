@@ -2,6 +2,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAnalytics } from "firebase/analytics";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -9,12 +10,13 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAdkFJyXzqWV5JoF1BeYmTjUHAijSNKecQ",
-  authDomain: "iope-b0702.firebaseapp.com",
-  projectId: "iope-b0702",
-  storageBucket: "iope-b0702.appspot.com",
-  messagingSenderId: "387928557568",
-  appId: "1:387928557568:web:7ac80236ad8c0e612430e5",
+  apiKey: "AIzaSyAdYEEBFldr5ReCV7TZ29mwXKs2cKf2NIA",
+  authDomain: "iope-ylakoulu.firebaseapp.com",
+  projectId: "iope-ylakoulu",
+  storageBucket: "iope-ylakoulu.appspot.com",
+  messagingSenderId: "206741895685",
+  appId: "1:206741895685:web:2bdf755b28124eb004fa6c",
+  measurementId: "G-F4ZTMBKV9P",
 };
 
 // Initialize Firebase
@@ -25,5 +27,6 @@ export const app =
 export const db = getFirestore(app);
 export const provider = new GoogleAuthProvider();
 export const auth = getAuth();
+//const analytics = getAnalytics(app);
 console.log("Firebaseconfigista!!");
 //
