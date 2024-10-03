@@ -17,8 +17,10 @@ export default function Editor({ data }) {
   };
 
   const [msg, setMsg] = useState("");
-  const [apiResponse, setApiResponse] = useState("");
+  const [apiTehtava, setApiTehtava] = useState("");
+  const [apiRatkaisu, setApiRatkaisu] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showSolution, setShowSolution] = useState(false);
   const id = data
     ? data.id
     : "Mitkä ovat funktion $f\\left(x\\right)=x^2-4$ nollakohdat?";
@@ -51,7 +53,7 @@ export default function Editor({ data }) {
   }, []);
 
   const handleClick = () => {
-    setApiResponse("");
+    setApiTehtava("");
     const element = document.getElementById("answer1");
 
     let result = ""; //element.textContent;
@@ -100,7 +102,8 @@ export default function Editor({ data }) {
     e.preventDefault();
     setLoading(true);
     //const message = handleClick();
-    setApiResponse("");
+    setApiTehtava("");
+    setApiRatkaisu("");
     //setMsg(result);
     try {
       const response = await fetch("/api/openai", {
@@ -123,20 +126,15 @@ export default function Editor({ data }) {
       // Tässä tallennus tietokantaan data ja message ja kysymys ja käyttäjä!
       // Add a new document with a generated id.
 
-      setApiResponse(data1.result);
-
-      console.log(data);
-      /*const docRef = await addDoc(collection(db, "ratkaisut"), {
-        kysymysID: id,
-        kysymys: kysymys,
-        viesti: message,
-        palaute: data1.result,
-      });*/
+      setApiTehtava(data1.tehtava);
+      setApiRatkaisu(data1.ratkaisu);
 
       //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.log(e);
-      setApiResponse("Something is going wrong, Please try again.");
+      setApiTehtava({
+        tehtava: "Something is going wrong, Please try again.",
+      });
     }
     setLoading(false);
   };
@@ -186,12 +184,21 @@ export default function Editor({ data }) {
             </label>
           </div>
         </form>
-
-        <Button type="submit" onClick={handleSubmit} text="Lähetä tekoälylle" />
+        <Button
+          type="submit"
+          onClick={handleSubmit}
+          text="Tilaa uusi tehtävä"
+        />
         <div>{"Viesti tekoälylle:lle: " + msg}</div>
-        <div>{"Palaute:"}</div>
         {loading && <Spinner />}
-        <MathText text={apiResponse} />
+        Tehtävä:
+        <MathText text={apiTehtava} />
+        <Button
+          type="submit"
+          onClick={() => setShowSolution(!showSolution)}
+          text="Ratkaisu"
+        />
+        {showSolution && <MathText text={apiRatkaisu} />}
       </div>
     </>
   );
