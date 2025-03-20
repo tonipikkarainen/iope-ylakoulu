@@ -35,14 +35,8 @@ export default function Editor({ data }) {
     mathjaxConfigScript.src = "/mathjax-config.js";
     mathjaxConfigScript.async = true;
 
-    const mathCodeScript = document.createElement("script");
-    mathCodeScript.src = "/math-code.js";
-    console.log("here in useeffect");
-
     // Append script elements to the document body
     document.body.appendChild(mathjaxConfigScript);
-    //document.body.appendChild(mathjaxScript);
-    document.body.appendChild(mathCodeScript);
 
     // Clean up function to remove the script elements when component unmounts
     return () => {
