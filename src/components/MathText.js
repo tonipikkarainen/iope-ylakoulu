@@ -14,6 +14,8 @@ const MathText = ({ text }) => {
   const renderMathExpressions = (text) => {
     // Etsitään tekstistä kaikki dollarimerkityt ja korvataan ne InlineMath-komponentilla
     // ja kaksinkertaiset dollarimerkityt ja korvataan ne BlockMath-komponentilla
+    //Tästä tulee exceptionia!!!! Korjaa, poikkeuskäsittely
+    // jos painaa monta kertaa jääkiekon kohdalla tilaa, niin tulee exceptioni
     text = text.replace(/\\newline/g, "\n");
     const parts = text.split(/(\$\$[\s\S]*?\$\$|\$.+?\$)/g);
     console.log(text);
