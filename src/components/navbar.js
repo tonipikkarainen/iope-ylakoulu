@@ -28,6 +28,10 @@ const Navbar = () => {
         querySnapshot.forEach((doc) => {
           newData.push({ id: doc.id, ...doc.data() });
         });
+
+        // Sort data alphabetically by 'otsikko'
+        newData.sort((a, b) => a.otsikko.localeCompare(b.otsikko));
+
         setData(newData);
         console.log("kys:");
         console.log(newData);
