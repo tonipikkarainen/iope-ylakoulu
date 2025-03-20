@@ -42,7 +42,6 @@ export default function Editor({ data }) {
     return () => {
       document.body.removeChild(mathjaxConfigScript);
       //document.body.removeChild(mathjaxScript);
-      document.body.removeChild(mathCodeScript);
     };
   }, []);
 
