@@ -29,6 +29,11 @@ export default function Editor({ data }) {
     : "Mitkä ovat funktion $f\\left(x\\right)=x^2-4$ nollakohdat?";
 
   useEffect(() => {
+    setApiTehtava("");
+    setApiAdvice("");
+    setApiRatkaisu("");
+  }, [kysymys]);
+  useEffect(() => {
     // Create script elements
 
     const mathjaxConfigScript = document.createElement("script");
