@@ -21,7 +21,7 @@ export default async function POST(request, response) {
   }
   // Parse the request body
   // Parse the request body
-  const { kysymys, msg, difficulty } = request.body;
+  const { kysymys } = request.body;
   //const req = await request.json();
   console.log(request.body);
   try {
@@ -31,14 +31,10 @@ export default async function POST(request, response) {
         {
           role: "system",
           content:
-            "Saat ensin tehtävän, sitten oppilaan toivoman aihepiirin, sitten toivotun vaikeustason. \
-            Luo ja palauta tehtävästä uusi versio, joka liittyy oppilaan toivomaan aihepiiriin. Ota huomioon toivottu vaikeustaso.\
-            älä anna ratkaisua! \
+            "Saat kysymyksen, johon sinun pitää kertoa ratkaisu. Kysyjä on yläkouluikäinen oppilas\
             Ole tarkkana, että annat matemaattisen tekstin yhden ($) tai kahden($$) $-merkin sisällä! ",
         },
-        { role: "user", content: "Tässä tehtävä: " + kysymys },
-        { role: "user", content: "Tässä aihepiiri: " + msg },
-        { role: "user", content: "Tässä vaikeustaso: " + difficulty },
+        { role: "user", content: "Tässä kysymys: " + kysymys },
       ],
       model: "gpt-4o",
     });
@@ -49,7 +45,7 @@ export default async function POST(request, response) {
 
     // Return the transcribed text in the response
     return response.status(200).json({
-      tehtava: responseContent,
+      solution: responseContent,
     });
   } catch (error) {
     // Handle any errors that occur during the request

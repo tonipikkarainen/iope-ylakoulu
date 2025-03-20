@@ -3,14 +3,12 @@ import { useEffect, useState } from "react";
 import { Button } from "./button";
 import Spinner from "./spinner";
 import MathText from "./MathText";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../../firebaseconfig";
-import { useAuth } from "../tools/auth";
 
 export default function Editor({ data }) {
   //const { isAuthenticated, user } = useAuth();
 
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("jalkapallo");
+  const [difficulty, setDifficulty] = useState("keskitaso");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -20,7 +18,9 @@ export default function Editor({ data }) {
   const [apiTehtava, setApiTehtava] = useState("");
   const [apiRatkaisu, setApiRatkaisu] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showSolution, setShowSolution] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [loading3, setLoading3] = useState(false);
+  const [apiAdvice, setApiAdvice] = useState("");
   const id = data
     ? data.id
     : "Mitkä ovat funktion $f\\left(x\\right)=x^2-4$ nollakohdat?";
@@ -45,57 +45,12 @@ export default function Editor({ data }) {
     };
   }, []);
 
-  const handleClick = () => {
-    setApiTehtava("");
-    const element = document.getElementById("answer1");
-
-    let result = ""; //element.textContent;
-
-    element.childNodes.forEach((node) => {
-      // If the node is a text node, append its text content
-      if (node.nodeType === Node.TEXT_NODE) {
-        result += node.textContent.trim() + " "; // Trim text content and add a space
-        console.log(node.nodeName);
-      }
-      // If the node is an img element, append its alt property
-      else if (node.nodeName.toLowerCase() === "img") {
-        console.log(node.nodeName);
-        result += node.alt.trim() + " "; // Trim alt property and add a space
-      } else if (node.nodeName.toLowerCase() === "div") {
-        result += handleDivNode(node, result);
-      }
-    });
-
-    // Do something with the element
-    // latex ei tule vielä
-    console.log("ChatGPT:lle: " + result);
-    setMsg(result);
-    console.log("viesti: " + msg);
-    return result;
-  };
-
-  const handleDivNode = (element) => {
-    console.log("handledivissa");
-    let result = "";
-    element.childNodes.forEach((node) => {
-      // If the node is a text node, append its text content
-      if (node.nodeType === Node.TEXT_NODE) {
-        result += node.textContent.trim() + " "; // Trim text content and add a space
-      }
-      // If the node is an img element, append its alt property
-      else if (node.nodeName.toLowerCase() === "img") {
-        console.log(node.nodeName);
-        result += node.alt.trim() + " "; // Trim alt property and add a space
-      }
-    });
-    return result;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     //const message = handleClick();
     setApiTehtava("");
+    setApiAdvice("");
     setApiRatkaisu("");
     //setMsg(result);
     try {
@@ -107,6 +62,7 @@ export default function Editor({ data }) {
         body: JSON.stringify({
           kysymys: kysymys,
           msg: selectedOption,
+          difficulty: difficulty,
         }),
       });
       const data1 = await response.json();
@@ -120,7 +76,6 @@ export default function Editor({ data }) {
       // Add a new document with a generated id.
 
       setApiTehtava(data1.tehtava);
-      setApiRatkaisu(data1.ratkaisu);
 
       //console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -130,6 +85,62 @@ export default function Editor({ data }) {
       });
     }
     setLoading(false);
+  };
+
+  const handleAdviceRequest = async () => {
+    setLoading2(true);
+    setApiAdvice("");
+    console.log("grsg" + apiTehtava);
+
+    try {
+      const response = await fetch("/api/advice", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          kysymys: apiTehtava,
+        }),
+      });
+      const data1 = await response.json();
+      if (response.status !== 200) {
+        throw new Error(
+          data1.error || `Request failed with status ${response.status}`
+        );
+      }
+      setApiAdvice(data1.advice);
+    } catch (e) {
+      console.log(e);
+      setApiAdvice("Could not fetch advice, please try again.");
+    }
+    setLoading2(false);
+  };
+
+  const handleSolutionRequest = async () => {
+    setLoading3(true);
+    setApiRatkaisu("");
+    try {
+      const response = await fetch("/api/solution", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          kysymys: apiTehtava,
+        }),
+      });
+      const data1 = await response.json();
+      if (response.status !== 200) {
+        throw new Error(
+          data1.error || `Request failed with status ${response.status}`
+        );
+      }
+      setApiRatkaisu(data1.solution);
+    } catch (e) {
+      console.log(e);
+      setApiRatkaisu("Could not fetch solution, please try again.");
+    }
+    setLoading3(false);
   };
 
   return (
@@ -176,22 +187,72 @@ export default function Editor({ data }) {
               Uinti
             </label>
           </div>
+          <hr className="my-2" />
+
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="helppo"
+                checked={difficulty === "helppo"}
+                onChange={(e) => setDifficulty(e.target.value)}
+              />
+              Helppo
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="keskitaso"
+                checked={difficulty === "keskitaso"}
+                onChange={(e) => setDifficulty(e.target.value)}
+              />
+              Keskitaso
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="vaikea"
+                checked={difficulty === "vaikea"}
+                onChange={(e) => setDifficulty(e.target.value)}
+              />
+              Vaikea
+            </label>
+          </div>
         </form>
         <Button
           type="submit"
           onClick={handleSubmit}
           text="Tilaa uusi tehtävä"
         />
-        <div>{"Viesti tekoälylle:lle: " + msg}</div>
         {loading && <Spinner />}
-        Tehtävä:
+        <div>Tehtävä:</div>
         <MathText text={apiTehtava} />
-        <Button
-          type="submit"
-          onClick={() => setShowSolution(!showSolution)}
-          text="Ratkaisu"
-        />
-        {showSolution && <MathText text={apiRatkaisu} />}
+        <div>
+          {apiTehtava && (
+            <Button
+              type="button"
+              onClick={handleAdviceRequest}
+              text="Pyydä neuvoa"
+            />
+          )}
+          {loading2 && <Spinner />}
+          <div>{apiAdvice && <MathText text={apiAdvice} />}</div>
+        </div>
+        <div>
+          {apiAdvice && (
+            <Button
+              type="button"
+              onClick={handleSolutionRequest}
+              text="Näytä ratkaisu - muista yrittää ensin itse!"
+            />
+          )}
+          {loading3 && <Spinner />}
+          <div>{apiRatkaisu && <MathText text={apiRatkaisu} />}</div>
+        </div>
       </div>
     </>
   );
