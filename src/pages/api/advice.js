@@ -32,7 +32,8 @@ export default async function POST(request, response) {
           role: "system",
           content:
             "Saat kysymyksen, johon sinun pitää antaa neuvoja yläkouluikäiselle oppilaalla \
-            Älä kerro vastausta! Anna pedagogisesti hyviä neuvoja.",
+            Älä kerro vastausta! Anna pedagogisesti hyviä neuvoja.\
+            Ole tarkkana, että annat matemaattisen tekstin yhden ($) tai kahden($$) $-merkin sisällä!",
         },
         { role: "user", content: "Tässä kysymys: " + kysymys },
       ],
