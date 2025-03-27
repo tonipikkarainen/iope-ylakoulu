@@ -50,7 +50,7 @@ export default function Home() {
   }*/
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex flex-col md:flex-row">
       <Head>
         <title>TehtäväAI</title>
         <link rel="icon" href="/favicon.ico" />
@@ -65,7 +65,7 @@ export default function Home() {
 
       <Navbar />
 
-      <div className="bg-gradient-to-br from-pink-500 via-purple-500 to-black w-full flex justify-center p-4">
+      <div className="flex-1 bg-gradient-to-br from-pink-500 via-purple-500 to-black flex justify-center p-4 pt-20 md:pt-4 md:pl-60">
         <div className="max-w-3xl w-full p-8 bg-white shadow-lg rounded-lg text-center">
           <h1 className="text-6xl font-bold text-gray-800 mb-4">TehtäväAI</h1>
           <p className="text-lg text-gray-700 mb-6">Tehtävän muokkaaja</p>

@@ -234,7 +234,7 @@ export default function Editor({ data }) {
           text="Tilaa uusi tehtävä"
         />
         {loading && <Spinner />}
-        <div>Tehtävä:</div>
+        <div className="overflow-auto break-words">Tehtävä:</div>
         <MathText text={apiTehtava} />
         <div>
           {apiTehtava && (
@@ -245,7 +245,9 @@ export default function Editor({ data }) {
             />
           )}
           {loading2 && <Spinner />}
-          <div>{apiAdvice && <MathText text={apiAdvice} />}</div>
+          <div className="overflow-auto break-words">
+            {apiAdvice && <MathText text={apiAdvice} />}
+          </div>
         </div>
         <div>
           {apiAdvice && (
@@ -256,7 +258,9 @@ export default function Editor({ data }) {
             />
           )}
           {loading3 && <Spinner />}
-          <div>{apiRatkaisu && <MathText text={apiRatkaisu} />}</div>
+          <div className="overflow-auto break-words">
+            {apiRatkaisu && <MathText text={apiRatkaisu} />}
+          </div>
         </div>
       </div>
     </>
