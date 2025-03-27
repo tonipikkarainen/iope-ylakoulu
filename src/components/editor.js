@@ -66,6 +66,7 @@ export default function Editor({ data }) {
         },
         body: JSON.stringify({
           kysymys: kysymys,
+          id: id,
           msg: selectedOption,
           difficulty: difficulty,
         }),
@@ -192,6 +193,28 @@ export default function Editor({ data }) {
               Uinti
             </label>
           </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="yleisurheilu"
+                checked={selectedOption === "yleisurheilu"}
+                onChange={handleOptionChange}
+              />
+              Yleisurheilu
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="salibandy"
+                checked={selectedOption === "salibandy"}
+                onChange={handleOptionChange}
+              />
+              Salibandy
+            </label>
+          </div>
           <hr className="my-2" />
 
           <div>
@@ -231,7 +254,7 @@ export default function Editor({ data }) {
         <Button
           type="submit"
           onClick={handleSubmit}
-          text="Tilaa uusi tehtävä"
+          text="Tilaa muokattu tehtävä"
         />
         {loading && <Spinner />}
         <div className="overflow-auto break-words">Tehtävä:</div>

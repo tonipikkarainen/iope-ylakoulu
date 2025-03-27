@@ -1,6 +1,8 @@
 // Import necessary libraries
 import { OpenAI } from "openai";
 import { NextResponse } from "next/server";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../../firebaseconfig";
 
 // Promisify the exec function from child_process
 
@@ -21,7 +23,7 @@ export default async function POST(request, response) {
   }
   // Parse the request body
   // Parse the request body
-  const { kysymys, msg, difficulty } = request.body;
+  const { kysymys, msg, difficulty, id } = request.body;
   //const req = await request.json();
   console.log(request.body);
   try {
@@ -33,8 +35,10 @@ export default async function POST(request, response) {
           content:
             "Saat ensin tehtävän, sitten oppilaan toivoman aihepiirin, sitten toivotun vaikeustason. \
             Luo ja palauta tehtävästä uusi versio, joka liittyy oppilaan toivomaan aihepiiriin. Ota huomioon toivottu vaikeustaso.\
-            älä anna ratkaisua! \
-            Ole tarkkana, että annat matemaattisen tekstin yhden ($) tai kahden($$) $-merkin sisällä! ",
+            älä anna ratkaisua! Ole tarkkana että kysymys on käytännön kannalta järkevä. Jos vaikeustaso on vaikea, \
+            tee tehtävästä sellainen, että se on kuitenkin mahdollista ratkaista. \
+            Ole tarkkana, että annat KAIKEN matemaattisen tekstin YHDEN ($) tai KAHDEN ($$) $-merkin sisällä! \
+            Älä käytä syntaksia \\(\\) tai \\[\\]",
         },
         { role: "user", content: "Tässä tehtävä: " + kysymys },
         { role: "user", content: "Tässä aihepiiri: " + msg },
@@ -46,6 +50,16 @@ export default async function POST(request, response) {
     console.log("completion täälllä" + completion.choices[0].message.content);
 
     const responseContent = completion.choices[0].message.content;
+
+    // tallennetaan kantaan
+    const docRef = await addDoc(collection(db, "muokatutTehtavat"), {
+      alkuperainenKysymysID: id,
+      muokattu: responseContent,
+      aihepiiri: msg,
+      vaikeustaso: difficulty,
+    });
+
+    console.log("Document written with ID: ", docRef.id);
 
     // Return the transcribed text in the response
     return response.status(200).json({

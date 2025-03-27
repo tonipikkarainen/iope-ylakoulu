@@ -48,13 +48,14 @@ const Navbar = () => {
         </div>
 
         <ul className={`mt-4 md:block ${isOpen ? "block" : "hidden"}`}>
-          <li>
-            <Link href="/">Home</Link>
+          <li className=" hover:underline">
+            <Link href="/">Koti</Link>
           </li>
+          <li className="text-sm ">Tehtävät:</li>
           {data.map((item) => (
             <li key={item.id} className="mt-2">
               <Link href="/[id]" as={`/${item.id}`}>
-                <div className="flex items-center hover:underline">
+                <div className="flex text-sm items-center hover:underline">
                   <BiBoltCircle className="mr-2" />
                   {item.otsikko}
                 </div>
