@@ -8,7 +8,7 @@ export default function Editor({ data }) {
   //const { isAuthenticated, user } = useAuth();
 
   const [selectedOption, setSelectedOption] = useState("jalkapallo");
-  const [difficulty, setDifficulty] = useState("keskitaso");
+  const [difficulty, setDifficulty] = useState("sama vaikeustaso");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -160,6 +160,7 @@ export default function Editor({ data }) {
         <div>{"Tehtävä: "}</div>
         <MathText text={kysymys} />
         <form className="text-black" onSubmit={handleSubmit}>
+          <div>{"Aihe: "}</div>
           <div>
             <label>
               <input
@@ -168,7 +169,7 @@ export default function Editor({ data }) {
                 checked={selectedOption === "jalkapallo"}
                 onChange={handleOptionChange}
               />
-              Jalkapallo
+              <span className="ml-2">Jalkapallo</span>
             </label>
           </div>
           <div>
@@ -179,7 +180,7 @@ export default function Editor({ data }) {
                 checked={selectedOption === "jääkiekko"}
                 onChange={handleOptionChange}
               />
-              Jääkiekko
+              <span className="ml-2">Jääkiekko</span>
             </label>
           </div>
           <div>
@@ -190,7 +191,7 @@ export default function Editor({ data }) {
                 checked={selectedOption === "uinti"}
                 onChange={handleOptionChange}
               />
-              Uinti
+              <span className="ml-2">Uinti</span>
             </label>
           </div>
           <div>
@@ -201,7 +202,7 @@ export default function Editor({ data }) {
                 checked={selectedOption === "yleisurheilu"}
                 onChange={handleOptionChange}
               />
-              Yleisurheilu
+              <span className="ml-2">Yleisurheilu</span>
             </label>
           </div>
           <div>
@@ -212,42 +213,97 @@ export default function Editor({ data }) {
                 checked={selectedOption === "salibandy"}
                 onChange={handleOptionChange}
               />
-              Salibandy
+              <span className="ml-2">Salibandy</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="taitoluistelu"
+                checked={selectedOption === "taitoluistelu"}
+                onChange={handleOptionChange}
+              />
+              <span className="ml-2">Taitoluistelu</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="joukkuevoimistelu"
+                checked={selectedOption === "joukkuevoimistelu"}
+                onChange={handleOptionChange}
+              />
+              <span className="ml-2">Joukkuevoimistelu</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="sulkapallo"
+                checked={selectedOption === "sulkapallo"}
+                onChange={handleOptionChange}
+              />
+              <span className="ml-2">Sulkapallo</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="frisbeegolf"
+                checked={selectedOption === "frisbeegolf"}
+                onChange={handleOptionChange}
+              />
+              <span className="ml-2">Frisbeegolf</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="cheerleading"
+                checked={selectedOption === "cheerleading"}
+                onChange={handleOptionChange}
+              />
+              <span className="ml-2">Cheerleading</span>
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                value="pesäpallo"
+                checked={selectedOption === "pesäpallo"}
+                onChange={handleOptionChange}
+              />
+              <span className="ml-2">Pesäpallo</span>
             </label>
           </div>
           <hr className="my-2" />
-
+          <div>{"Vaikeustaso: "}</div>
           <div>
             <label>
               <input
                 type="radio"
-                value="helppo"
-                checked={difficulty === "helppo"}
+                value="sama vaikeustaso"
+                checked={difficulty === "sama vaikeustaso"}
                 onChange={(e) => setDifficulty(e.target.value)}
               />
-              Helppo
+              <span className="ml-2">Sama vaikeustaso</span>
             </label>
           </div>
           <div>
             <label>
               <input
                 type="radio"
-                value="keskitaso"
-                checked={difficulty === "keskitaso"}
+                value="Vaikeampi tehtävä"
+                checked={difficulty === "Vaikeampi tehtävä"}
                 onChange={(e) => setDifficulty(e.target.value)}
               />
-              Keskitaso
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="radio"
-                value="vaikea"
-                checked={difficulty === "vaikea"}
-                onChange={(e) => setDifficulty(e.target.value)}
-              />
-              Vaikea
+              <span className="ml-2">Vaikeampi tehtävä</span>
             </label>
           </div>
         </form>

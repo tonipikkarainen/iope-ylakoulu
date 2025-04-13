@@ -23,7 +23,12 @@ const Navbar = () => {
           newData.push({ id: doc.id, ...doc.data() });
         });
 
-        newData.sort((a, b) => a.otsikko.localeCompare(b.otsikko));
+        newData.sort((a, b) =>
+          a.otsikko.localeCompare(b.otsikko, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          })
+        );
 
         setData(newData);
       } catch (error) {

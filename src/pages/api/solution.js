@@ -33,7 +33,7 @@ export default async function POST(request, response) {
           content:
             "Saat kysymyksen, johon sinun pitää kertoa ratkaisu. Kysyjä on yläkouluikäinen oppilas\
             Ole tarkkana, että annat KAIKEN matemaattisen tekstin YHDEN ($) tai KAHDEN ($$) $-merkin sisällä! \
-            Älä käytä syntaksi \\(\\) tai \\[\\] ",
+            Älä käytä syntaksia \\(\\) tai \\[\\] ",
         },
         { role: "user", content: "Tässä kysymys: " + kysymys },
       ],
