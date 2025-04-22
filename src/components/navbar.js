@@ -43,7 +43,7 @@ const Navbar = () => {
     <>
       <nav className="fixed bg-purple-700 text-white p-4 w-full md:w-56 md:h-full">
         <div className="flex items-center justify-between md:block">
-          <h1 className="text-3xl font-bold">LaskijanAI</h1>
+          <h1 className="text-3xl font-bold">TehtäväAI</h1>
           <button
             onClick={toggleMenu}
             className="text-3xl focus:outline-none md:hidden"
