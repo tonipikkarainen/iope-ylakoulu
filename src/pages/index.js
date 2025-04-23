@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       <Head>
-        <title>LaskijanAI</title>
+        <title>TehtäväAI</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
