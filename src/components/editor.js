@@ -220,11 +220,11 @@ export default function Editor({ data }) {
             <label>
               <input
                 type="radio"
-                value="taitoluistelu"
-                checked={selectedOption === "taitoluistelu"}
+                value="muodostelmaluistelu"
+                checked={selectedOption === "muodostelmaluistelu"}
                 onChange={handleOptionChange}
               />
-              <span className="ml-2">Taitoluistelu</span>
+              <span className="ml-2">Muodostelmaluistelu</span>
             </label>
           </div>
           <div>

@@ -25,7 +25,7 @@ export default async function POST(request, response) {
   // Parse the request body
   const { kysymys, msg, difficulty, id } = request.body;
   //const req = await request.json();
-  console.log(request.body);
+
   try {
     // Openai call
     const completion = await openai.chat.completions.create({
@@ -34,8 +34,10 @@ export default async function POST(request, response) {
           role: "system",
           content:
             "Saat ensin tehtävän, sitten oppilaan toivoman aihepiirin, sitten toivotun vaikeustason. \
-            Luo ja palauta tehtävästä uusi versio, joka liittyy oppilaan toivomaan aihepiiriin. Ota huomioon toivottu vaikeustaso.\
-            älä anna ratkaisua! Ole tarkkana että kysymys on käytännön kannalta järkevä. Jos vaikeustaso on vaikea, \
+            Palauta tehtävästä uusi versio, joka liittyy oppilaan toivomaan aihepiiriin. Ota huomioon toivottu vaikeustaso.\
+            Älä anna ratkaisua! \
+            HUOM! OLE TARKKANA, ETTÄ TEHTÄVÄ ON KÄYTÄNNÖN KANNALTA JÄRKEVÄ JA TEHTÄVÄN MATEMAATTINEN IDEA ON SAMA KUIN ALKUPERÄISESSÄ!\
+            Jos vaikeustaso on vaikea, \
             tee tehtävästä sellainen, että se on kuitenkin mahdollista ratkaista. \
             Ole tarkkana, että annat KAIKEN matemaattisen tekstin YHDEN ($) tai KAHDEN ($$) $-merkin sisällä! \
             Älä käytä syntaksia \\(\\) tai \\[\\]",
@@ -47,8 +49,6 @@ export default async function POST(request, response) {
       model: "gpt-4o",
     });
 
-    console.log("completion täälllä" + completion.choices[0].message.content);
-
     const responseContent = completion.choices[0].message.content;
 
     // tallennetaan kantaan
@@ -58,8 +58,6 @@ export default async function POST(request, response) {
       aihepiiri: msg,
       vaikeustaso: difficulty,
     });
-
-    console.log("Document written with ID: ", docRef.id);
 
     // Return the transcribed text in the response
     return response.status(200).json({
