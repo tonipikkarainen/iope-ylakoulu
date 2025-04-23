@@ -36,7 +36,7 @@ export default function Home() {
 
       <div className="flex-1 bg-gradient-to-br from-pink-500 via-purple-500 to-black flex justify-center p-4 pt-20 md:pt-4 md:pl-60">
         <div className="max-w-md w-full p-8 bg-white shadow-lg rounded-lg text-center">
-          <h1 className="text-6xl font-bold text-gray-800 mb-4">LaskijanAI</h1>
+          <h1 className="text-6xl font-bold text-gray-800 mb-4">TehtäväAI</h1>
           <p className="text-lg text-gray-700 mb-6">| Tehtävän muokkaaja |</p>
           <div className="text-sm text-left font-bold text-gray-800 mb-6">
             Tekoäly luo valitsemastasi tehtävästä uuden version toivomasi
